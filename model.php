@@ -84,3 +84,19 @@ function set_mime($path,$mime)
 	return true;
 }
 
+// Get the file name and mime-type
+function get_meta($path)
+{	
+	$json = @file_get_contents(meta_path($path));
+	if ( !$json ) return null;
+	
+	$meta = @json_decode($json);
+	if ( !$meta ) return null;
+	
+	if ( !isset($meta->mime) )
+	{
+		$meta->mime = "application/octet-stream";
+	}
+	
+	return $meta;
+}
