@@ -19,9 +19,9 @@ function respond($json)
 }
 
 // Displays an error JSON
-function error()
+function error($text = "500 Internal server error")
 {
-	header("HTTP/1.1 500 Internal server error");
+	header("HTTP/1.1 $text");
 	respond(array("status" => "error"));
 }
 
@@ -52,6 +52,6 @@ function file($path,$mime,$filename)
 	}
 	else
 	{
-		error();
+		error("404 Not Found");
 	}
 }
