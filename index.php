@@ -16,6 +16,10 @@ if ( METHOD == 'POST' )
 	{
 		require_once 'delete.php';
 	}
+	else if ( URI == '/prepare' )
+	{
+		require_once 'prepare.php';
+	}
 	else if ( URI == '/meta' )
 	{
 		require_once 'meta.php';
