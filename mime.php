@@ -2,8 +2,8 @@
 
 $request = (object) array(		
 	"ends" => date('Y-m-d\TH:i:s\Z',strtotime(isset($_POST["ends"]) ? $_POST["ends"] : "")),
-	"path" => isset($_POST["path"]) ? $_POST["path"] : "",
-	"mime" => isset($_POST["mime"]) ? $_POST["mime"] : ""
+	"mime" => isset($_POST["mime"]) ? $_POST["mime"] : "",
+	"path" => isset($_POST["path"]) ? $_POST["path"] : ""
 );
 
 $json = json_encode($request);
