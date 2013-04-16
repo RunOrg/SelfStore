@@ -10,6 +10,9 @@ define('URI', $_SERVER['REQUEST_URI']);
 // We support GET and POST methods
 define('METHOD', $_SERVER['REQUEST_METHOD']);
 
+// Current time in ISO-8601 format
+define('NOW', date('Y-m-d\TH:i:s\Z'));
+
 // Respond with some JSON
 function respond($json)
 {
@@ -34,7 +37,7 @@ function redirect($url)
 }
 
 // Returns the contents of a file
-function file($path,$mime,$filename)
+function return_file($path,$mime,$filename)
 {
 	$file = fopen($path);
 	if ( $file ) 
