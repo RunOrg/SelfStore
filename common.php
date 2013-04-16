@@ -5,7 +5,13 @@ require_once 'config.php';
 date_default_timezone_set('UTC');
 
 // Along the lines of '/path/to/file.png'
-define('URI', $_SERVER['REQUEST_URI']);
+$uri = $_SERVER['REQUEST_URI'];
+if ( strpos($uri,'?') !== false )
+{
+	list ($uri, ) = explode("?",$uri);
+}
+
+define('URI', $uri);
 
 // We support GET and POST methods
 define('METHOD', $_SERVER['REQUEST_METHOD']);
