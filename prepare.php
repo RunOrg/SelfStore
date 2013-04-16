@@ -15,7 +15,7 @@ $request = (object) array(
 	
 );
 
-$hmac = $_GET["HMAC"];
+$hmac = $_POST["hmac"];
 $json = json_encode($request);
 
 $hmac_is_correct = ( hash_hmac("sha1",$json,API_KEY) == $hmac );
