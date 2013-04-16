@@ -2,7 +2,11 @@
 
 require_once 'common.php';
 
-if ( METHOD == 'POST' )
+if ( TEST_MODE && URI == '/test' )
+{
+	require_once 'test.php';
+}
+else if ( METHOD == 'POST' )
 {
 	if ( URI == '/upload' ) 
 	{
@@ -27,12 +31,5 @@ if ( METHOD == 'POST' )
 }
 else
 {
-	if ( TEST_MODE && URI == '/test' )
-	{
-		require_once 'test.php';
-	}
-	else
-	{
-		require_once 'download.php';
-	}
+	require_once 'download.php';
 }
