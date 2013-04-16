@@ -18,14 +18,6 @@ if ( !$hmac_is_correct || $request->ends < NOW )
 else
 {
 	require_once 'model.php' ;
-	$meta = get_meta($request->path);
-	
-	if ( !isset($meta) ) 
-	{
-		error("404 Not Found");
-	}
-	else
-	{
-		respond(array("status" => "ok"));
-	}
+	delete_file($request->path);
+	respond(array("status" => "ok"));	
 }
