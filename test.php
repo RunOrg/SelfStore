@@ -9,6 +9,9 @@
 
 <div class="container">
 	<h2>Files</h2>
+<div class="row">
+<div class="span7">
+
 	<table class="table">
 		<tr><th>Path</th><th>Hash</th></tr>
 		<?php foreach (all_files() as $file): ?>
@@ -30,7 +33,35 @@
 		</tr>
 		<?php endforeach; ?>
 	</table>
+
 </div>
+<div class="span5">
+	
+	<h3>Upload File</h3>
+	<form class="form-horizontal" action="" method="POST" enctype="multipart/form-data">
+		<input type="hidden" name="token"/>
+		<div class="control-group">
+			<label class="control-label" for="path">Upload path</label>
+			<div class="controls">
+				<input id="path" name="path" type="text" value="path" placeholder="/path/to/file" />
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label" for="file">Local file</label>
+			<div class="controls">
+				<input id="file" name="file" type="file" />
+			</div>
+		</div>
+		<div class="form-actions">
+			<button class="btn btn-primary" type="submit">Upload</button>
+		</div>
+	</form>
+
+</div>
+</div>
+</div>
+
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
 
 </body>
 </html>
