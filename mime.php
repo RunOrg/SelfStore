@@ -6,17 +6,15 @@ $request = (object) array(
 	"path" => isset($_POST["path"]) ? $_POST["path"] : ""
 );
 
-$json = json_encode($request);
+$hmac = isset($_POST["hmac"]) ? $_POST["hmac"] : "";
+$hmac_is_correct = ( hmac($request) == $hmac );
 
-$hmac = isset($_GET["hmac"]) ? $_GET["hmac"] : "";
-$hmac_is_correct = ( hash_hmac("sha1",$json,API_KEY) == $hmac );
-
-if ( !$hmac_is_correct || $request->ends < NOW )
+if ( !$hmac_is_correct || $request['ends'] < NOW )
 {
 	error("401 Unauthorized");
 }
 else
 {
 	require_once 'model.php' ;
-	set_mime($request->path,$request->mime);
+	set_mime($request['path'],$request['mime']);
 }

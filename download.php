@@ -1,24 +1,21 @@
 <?php
 
-$request = (object) array(		
+$request = array(		
 	"ends" => date('Y-m-d\TH:i:s\Z',strtotime(isset($_GET["ends"]) ? $_GET["ends"] : "")),
 	"path" => URI,
 	"what" => "GET"
 );
 
-$json = json_encode($request);
+$hmac_is_correct = ( hmac($request) == $hmac );
 
-$hmac = isset($_GET["hmac"]) ? $_GET["hmac"] : "";
-$hmac_is_correct = ( hash_hmac("sha1",$json,API_KEY) == $hmac );
-
-if ( !$hmac_is_correct || $request->ends < NOW )
+if ( !$hmac_is_correct || $request['ends'] < NOW )
 {
 	error("401 Unauthorized");
 }
 else
 {
 	require_once 'model.php' ;
-	$meta = get_meta($request->path);
+	$meta = get_meta($request['path']);
 	
 	if ( !isset($meta) ) 
 	{
@@ -26,6 +23,6 @@ else
 	}
 	else
 	{
-		return_file($request->path, $meta->mime, $meta->name);
+		return_file($request['path'], $meta->mime, $meta->name);
 	}
 }

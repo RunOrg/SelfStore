@@ -4,16 +4,15 @@ include "model.php";
 
 if (isset($_GET["upload"]))
 {
-	$request = (object) array(
+	$request = array(
 		"ends" => date('Y-m-d\TH:i:s\Z',time() + 3600),
 		"path" => $_POST["path"],
 		"size" => 1024 * 1024
 	);
 	
-	$json = json_encode($request);
-	$hmac = hash_hmac("sha1",$json,API_KEY);
+	$hmac = hmac($request);
 
-	$request->hmac = $hmac;
+	$request['hmac'] = $hmac;
 	respond($request);
 }
 
@@ -97,6 +96,7 @@ $(function(){
 		
 		$.post("/test?upload",{path:$("#path").val()},function(data){
 			$.post("/prepare",data,function(allowed){
+				console.log(allowed);
 				$("#token").val(allowed.token);
 				$("#upload").submit();
 			});

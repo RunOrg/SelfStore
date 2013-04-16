@@ -19,6 +19,20 @@ define('METHOD', $_SERVER['REQUEST_METHOD']);
 // Current time in ISO-8601 format
 define('NOW', date('Y-m-d\TH:i:s\Z'));
 
+// Compute the HMAC of a payload
+function hmac($request)
+{
+	ksort($request);
+	$payload = array();
+
+	foreach ($request as $key => $value) 
+		$payload[] = urlencode($key)."=".urlencode($value);
+
+	$payload = implode("&",$payload);
+
+	return hash_hmac('sha1',$payload,API_KEY);
+}
+
 // Respond with some JSON
 function respond($json)
 {

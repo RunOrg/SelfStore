@@ -1,6 +1,6 @@
 <?php
 
-$request = (object) array(
+$request = array(
 	
 	// The time when this prepared upload expires, expressed as
 	// an ISO-8601 date time with no timezone.
@@ -16,9 +16,7 @@ $request = (object) array(
 );
 
 $hmac = $_POST["hmac"];
-$json = json_encode($request);
-
-$hmac_is_correct = ( hash_hmac("sha1",$json,API_KEY) == $hmac );
+$hmac_is_correct = ( hmac($request) == $hmac );
 
 if ( !$hmac_is_correct )
 {
@@ -27,6 +25,6 @@ if ( !$hmac_is_correct )
 else
 {
 	require_once 'model.php';
-	$token = prepare_upload($request);
+	$token = prepare_upload((object)$request);
 	respond(array("status" => "ok", "token" => $token));
 }
