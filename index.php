@@ -27,5 +27,12 @@ if ( METHOD == 'POST' )
 }
 else
 {
-	require_once 'download.php';
+	if ( TEST_MODE && URI == '/test' )
+	{
+		require_once 'test.php';
+	}
+	else
+	{
+		require_once 'download.php';
+	}
 }
