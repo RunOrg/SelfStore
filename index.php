@@ -16,9 +16,9 @@ if ( METHOD == 'POST' )
 	{
 		require_once 'prepare.php';
 	}
-	else if ( URI == '/meta' )
+	else if ( URI == '/mime' )
 	{
-		require_once 'meta.php';
+		require_once 'mime.php';
 	}
 	else
 	{
