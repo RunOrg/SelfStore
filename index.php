@@ -22,7 +22,7 @@ if ( METHOD == 'POST' )
 	}
 	else
 	{
-		error();	
+		error("405 Method Not Allowed");	
 	}
 }
 else
