@@ -45,7 +45,7 @@ function redirect($url)
 // Returns the contents of a file
 function return_file($path,$mime,$filename)
 {
-	$file = fopen($path);
+	$file = fopen(file_path($path),"r");
 	if ( $file ) 
 	{
 		header("Content-Type: $mime");

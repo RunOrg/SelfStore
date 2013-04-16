@@ -1,4 +1,23 @@
-<?php include "model.php"; ?>
+<?php 
+
+include "model.php"; 
+
+if (isset($_GET["upload"]))
+{
+	$request = (object) array(
+		"ends" => date('Y-m-d\TH:i:s\Z',time() + 3600),
+		"path" => $_POST["path"],
+		"size" => 1024 * 1024
+	);
+	
+	$json = json_encode($request);
+	$hmac = hash_hmac("sha1",$json,API_KEY);
+
+	$request->hmac = $hmac;
+	respond($request);
+}
+
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -24,6 +43,7 @@
 					"what" => "GET"
 				);
 				
+				$json = json_encode($request);
 				$hmac = hash_hmac("sha1",$json,API_KEY);
 				
 				echo $file->path . "?ends=" . $request->ends . "&hmac=$hmac";
@@ -38,12 +58,13 @@
 <div class="span5">
 	
 	<h3>Upload File</h3>
-	<form class="form-horizontal" action="" method="POST" enctype="multipart/form-data">
-		<input type="hidden" name="token"/>
+	<form id="upload" class="form-horizontal" action="/upload" method="POST" enctype="multipart/form-data">
+		<input id="token" type="hidden" name="token"/>
+		<input type="hidden" name="next" value="http://<?php echo $_SERVER["SERVER_NAME"]; ?>/test"/>
 		<div class="control-group">
 			<label class="control-label" for="path">Upload path</label>
 			<div class="controls">
-				<input id="path" name="path" type="text" value="path" placeholder="/path/to/file" />
+				<input id="path" name="path" type="text" placeholder="/path/to/file" />
 			</div>
 		</div>
 		<div class="control-group">
@@ -62,6 +83,31 @@
 </div>
 
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+<script type="text/javascript">
+$(function(){
+
+	var old_token = "";
+
+	$("#upload").submit(function(){
+	
+		if ($("#token").val() != old_token) {
+			old_token = $("#token").val();
+			return true;
+		}
+		
+		$.post("/test?upload",{path:$("#path").val()},function(data){
+			$.post("/prepare",data,function(allowed){
+				$("#token").val(allowed.token);
+				$("#upload").submit();
+			});
+		});
+		
+		return false;
+	
+	});
+
+});
+</script>
 
 </body>
 </html>
