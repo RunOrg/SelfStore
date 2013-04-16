@@ -54,7 +54,10 @@ function perform_upload($path,$token,$size,$filetmp,$filename)
 	
 	if ( $policy->ends < NOW ) return false;
 	
-	$meta = array("name" => $filename);
+	$meta = array(
+		"name" => $filename, 
+		"path" => $path
+	);
 	
 	$success = @copy($filetmp, file_path($path));
 	if ( !$success ) return false;
