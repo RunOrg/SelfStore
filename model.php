@@ -100,3 +100,11 @@ function get_meta($path)
 	
 	return $meta;
 }
+
+// Deletes a file (does nothing if no such file exists)
+function delete($path)
+{
+	@unlink(meta_path($path));
+	@unlink(upload_path($path));
+	@unlink(file_path($path));
+}
