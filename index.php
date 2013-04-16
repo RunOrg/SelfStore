@@ -31,5 +31,12 @@ else if ( METHOD == 'POST' )
 }
 else
 {
-	require_once 'download.php';
+	if ( URI == '/api' )
+	{
+		require_once 'api.php';
+	}
+	else
+	{
+		require_once 'download.php';
+	}
 }
