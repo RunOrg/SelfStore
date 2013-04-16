@@ -40,7 +40,7 @@ function prepare_upload($policy)
 
 // Returns true if a given upload was permitted,
 // saves the data to the disk.
-function perform_upload($path,$token,$size,$file,$filename)
+function perform_upload($path,$token,$size,$filetmp,$filename)
 {
 	$json = @file_get_contents(upload_path($path));
 	if ( !$json ) return false;
@@ -56,7 +56,9 @@ function perform_upload($path,$token,$size,$file,$filename)
 	
 	$meta = array("name" => $filename);
 	
-	@file_put_contents(file_path($path), $file);
+	$success = @copy($filetmp, file_path($path));
+	if ( !$success ) return false;
+	
 	@file_put_contents(meta_path($path), json_encode($meta));
 	@unlink(upload_path($path));
 	
