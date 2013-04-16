@@ -111,3 +111,23 @@ function delete_file($path)
 	@unlink(upload_path($path));
 	@unlink(file_path($path));
 }
+
+// List all files (only in test mode)
+if (TEST_MODE)
+{
+	function all_files()
+	{
+		$out = array();
+		foreach (glob("uploads/*.meta") as $metapath)
+		{
+			$json = @file_get_contents($metapath);
+			if ( !$json ) continue;
+			
+			$meta = @json_decode($json);
+			if ( !$meta ) continue;
+			
+			$out[] = $meta;
+		}
+		return $out;
+	}
+}
