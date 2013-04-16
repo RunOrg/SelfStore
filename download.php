@@ -2,7 +2,8 @@
 
 $request = (object) array(		
 	"ends" => date('Y-m-d\TH:i:s\Z',strtotime(isset($_GET["ends"]) ? $_GET["ends"] : "")),
-	"path" => URI
+	"path" => URI,
+	"what" => "GET"
 );
 
 $json = json_encode($request);
