@@ -105,6 +105,23 @@ path=/the/path/requested&ends=2013-04-18T15:23:03Z&size=10000</pre>
 		Submit the form and the server will redirect you to the specified URL.
 	</p>
 	
+	<h2>Downloading a file</h2>
+	<p>
+		If the file is public (its URI begins with <code>/public/</code>), simply perform an HTTP
+		GET on its path, for instance:
+	</p>
+	<pre>GET /public/file.txt</pre>
+	<p>
+		If the file is private, you need to provide the HMAC and expiration date, such as: 		
+	</p>
+	<pre>GET /path?ends=2013-04-17T07:39:27Z&hmac=de544cbf77b80a349a3cd9f91419e4dbfd573f2e</pre>
+	<p>
+		The HMAC is computed from field <code>ends</code> (the expiration time for the URL),
+		the path itself, and a third parameter named <code>what</code> with a value of <code>GET</code>.
+		In the above example, the request payload would be:
+	</p>
+	<pre>ends=2013-04-17T07:39:27Z&path=/path&what=GET</pre>	
+	
 </div>
 </div>
 </div>
