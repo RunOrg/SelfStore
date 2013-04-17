@@ -27,6 +27,7 @@ else
 		"what" => "GET"
 	);
 
+	$hmac = isset($_GET['hmac']) ? $_GET['hmac'] : '';
 	$hmac_is_correct = ( hmac($request) == $hmac );
 
 	if ( !$hmac_is_correct || $request['ends'] < NOW )
