@@ -142,6 +142,22 @@ path=/the/path/requested&ends=2013-04-18T15:23:03Z&size=10000</pre>
 	</p>
 	<pre>ends=2013-04-17T07:39:27Z&path=/path&what=DELETE</pre>
 		
+	<h2>Setting the content-type</h2>
+	<p>
+		By default, files are downloaded with a Content-Type of <code>application/octet-stream</code>.
+		To change this:
+	</p>
+	<pre>POST /mime</pre>
+	<dl>
+		<dt>path</dt>
+		<dd>The path of the file to be deleted. Nothing happens if that path does not exist.</dd>
+		<dt>ends</dt>
+		<dd>The expiration time for this request.</dd>
+		<dt>mime</dt>
+		<dd>The MIME-type for this file.</dd>
+		<dt>hmac</dt>
+		<dd>The authentication proof, computed from the above fields.</dd>
+	</dl>
 	
 	
 </div>
