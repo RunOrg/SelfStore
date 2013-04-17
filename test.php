@@ -36,16 +36,15 @@ if (isset($_GET["upload"]))
 		<tr>
 			<td><a href="<?php 
 			
-				$request = (object) array(
+				$request = array(
 					"ends" => date('Y-m-d\TH:i:s\Z', time() + 3600),
 					"path" => $file->path,
 					"what" => "GET"
 				);
+
+				$hmac = hmac($request);
 				
-				$json = json_encode($request);
-				$hmac = hash_hmac("sha1",$json,API_KEY);
-				
-				echo $file->path . "?ends=" . $request->ends . "&hmac=$hmac";
+				echo $file->path . "?ends=" . $request['ends'] . "&hmac=$hmac";
 			
 			?>"><?php echo $file->path; ?></a></td>
 			<td><?php echo md5($file->path); ?></td>
@@ -95,8 +94,7 @@ $(function(){
 		}
 		
 		$.post("/test?upload",{path:$("#path").val()},function(data){
-			$.post("/prepare",data,function(allowed){
-				console.log(allowed);
+			$.post("/prepare",data,function(allowed){				
 				$("#token").val(allowed.token);
 				$("#upload").submit();
 			});
